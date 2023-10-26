@@ -145,6 +145,25 @@ class Email(Field):
         else:
             raise EmailInvalidFormatError('Invalid email format')
 
+class Address(Field):
+    pass
+
+
+class PhoneInvalidFormatError(Exception):
+    pass
+
+
+class BirthdayInvalidFormatError(Exception):
+    pass
+
+
+class EmailInvalidFormatError(Exception):
+    pass
+
+
+class NoteInputInvalidFormatError(Exception):
+    pass
+
 
 class Notes(UserList):
 
@@ -172,26 +191,6 @@ class Note:
         self.text = text
         self.tags = tags
         self.title = title
-
-
-class Address(Field):
-    pass
-
-
-class PhoneInvalidFormatError(Exception):
-    pass
-
-
-class BirthdayInvalidFormatError(Exception):
-    pass
-
-
-class EmailInvalidFormatError(Exception):
-    pass
-
-
-class NoteInputInvalidFormatError(Exception):
-    pass
 
 
 address_book = AddressBook()

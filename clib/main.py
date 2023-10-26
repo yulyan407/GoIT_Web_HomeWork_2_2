@@ -1,5 +1,7 @@
-from clib import functions
-from clib.sort import main as sort
+#from clib import functions
+#from clib.sort import main as sort
+import functions
+from sort import main as sort
 
 
 def main():

@@ -1,4 +1,5 @@
-from clib import classes
+#from clib import classes
+import classes
 
 
 def parse(user_input, commands):
