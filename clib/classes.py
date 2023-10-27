@@ -3,9 +3,21 @@ from datetime import datetime
 from pickle import load, dump
 from pathlib import Path
 import re
+from abc import abstractmethod, ABC
 
 
-class DataTransfer:
+class AbcDataTransfer(ABC):
+
+    @abstractmethod
+    def load_data(self):
+        pass
+
+    @abstractmethod
+    def save_data(self, data):
+        pass
+
+
+class DataTransfer(AbcDataTransfer):
 
     def __init__(self, filename):
         self.filename = filename
@@ -21,7 +33,26 @@ class DataTransfer:
             dump(data, file)
 
 
-class AddressBook(UserDict):
+class AbcAddressBook(ABC):
+
+    @abstractmethod
+    def save_data(self):
+        pass
+
+    @abstractmethod
+    def add_record(self, record):
+        pass
+
+    @abstractmethod
+    def del_record(self, name):
+        pass
+
+    @abstractmethod
+    def iterator(self, n_records):
+        pass
+
+
+class AddressBook(UserDict, AbcAddressBook):
     def __init__(self):
         super().__init__()
         filename = 'address_book.bin'
@@ -55,7 +86,34 @@ class AddressBook(UserDict):
             yield page
 
 
-class Record:
+class AbcRecord(ABC):
+
+    @abstractmethod
+    def add_phone(self, phone):
+        pass
+
+    @abstractmethod
+    def remove_phone(self, rem_phone):
+        pass
+
+    @abstractmethod
+    def add_birthday(self, birthday):
+        pass
+
+    @abstractmethod
+    def add_email(self, email):
+        pass
+
+    @abstractmethod
+    def add_address(self, address):
+        pass
+
+    @abstractmethod
+    def days_to_birthday(self):
+        pass
+
+
+class Record(AbcRecord):
     def __init__(self, name, birthday=None, email=None, address=None):
         self.name = name
         self.phones = []
@@ -104,6 +162,7 @@ class Field:
 
 
 class Name(Field):
+
     pass
 
 
@@ -146,22 +205,27 @@ class Email(Field):
             raise EmailInvalidFormatError('Invalid email format')
 
 class Address(Field):
+
     pass
 
 
 class PhoneInvalidFormatError(Exception):
+
     pass
 
 
 class BirthdayInvalidFormatError(Exception):
+
     pass
 
 
 class EmailInvalidFormatError(Exception):
+
     pass
 
 
 class NoteInputInvalidFormatError(Exception):
+
     pass
 
 

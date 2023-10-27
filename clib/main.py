@@ -1,5 +1,8 @@
+# import for installing a package
 #from clib import functions
 #from clib.sort import main as sort
+
+# import for run main
 import functions
 from sort import main as sort
 

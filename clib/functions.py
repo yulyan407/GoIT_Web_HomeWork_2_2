@@ -1,4 +1,7 @@
+# import for installing a package
 #from clib import classes
+
+# import for run main
 import classes
 
 
