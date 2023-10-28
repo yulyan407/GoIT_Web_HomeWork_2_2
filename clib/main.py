@@ -4,6 +4,7 @@
 
 # import for run main
 import functions
+from classes import console
 from sort import main as sort
 
 
@@ -38,23 +39,23 @@ def main():
                         'close': functions.end,
                         }
 
-    print("Welcome! I'm CLI - your personal Command Line Interface Bot.")
-    print("Please enter your command or type 'help' to see the full list of available commands.")
+    console("Welcome! I'm CLI - your personal Command Line Interface Bot.")
+    console("Please enter your command or type 'help' to see the full list of available commands.")
 
     while True:
         user_input = input('Enter command: ')
         if user_input.lower() in handler_commands.keys():
             output = handler_commands[user_input.lower()]()
-            print(output)
+            console(output)
             if output == 'Good bye! Thank you for using CLIB.':
                 functions.write_file()
                 exit()
         else:
             command, args = functions.parse(user_input, handler_commands.keys())
             if command:
-                print(handler_commands[command](*args))
+                console(handler_commands[command](*args))
             else:
-                print("Unknown command. Please type 'help' to get the full list of available commands.")
+                console("Unknown command. Please type 'help' to get the full list of available commands.")
 
 
 if __name__ == '__main__':

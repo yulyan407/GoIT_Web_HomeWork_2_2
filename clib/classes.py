@@ -4,9 +4,10 @@ from pickle import load, dump
 from pathlib import Path
 import re
 from abc import abstractmethod, ABC
+from colorama import Fore, Style
 
 
-class AbcDataTransfer(ABC):
+class AbsDataTransfer(ABC):
 
     @abstractmethod
     def load_data(self):
@@ -17,7 +18,7 @@ class AbcDataTransfer(ABC):
         pass
 
 
-class DataTransfer(AbcDataTransfer):
+class DataTransfer(AbsDataTransfer):
 
     def __init__(self, filename):
         self.filename = filename
@@ -33,7 +34,7 @@ class DataTransfer(AbcDataTransfer):
             dump(data, file)
 
 
-class AbcAddressBook(ABC):
+class AbsAddressBook(ABC):
 
     @abstractmethod
     def save_data(self):
@@ -52,7 +53,7 @@ class AbcAddressBook(ABC):
         pass
 
 
-class AddressBook(UserDict, AbcAddressBook):
+class AddressBook(UserDict, AbsAddressBook):
     def __init__(self):
         super().__init__()
         filename = 'address_book.bin'
@@ -86,7 +87,7 @@ class AddressBook(UserDict, AbcAddressBook):
             yield page
 
 
-class AbcRecord(ABC):
+class AbsRecord(ABC):
 
     @abstractmethod
     def add_phone(self, phone):
@@ -113,7 +114,7 @@ class AbcRecord(ABC):
         pass
 
 
-class Record(AbcRecord):
+class Record(AbsRecord):
     def __init__(self, name, birthday=None, email=None, address=None):
         self.name = name
         self.phones = []
@@ -204,6 +205,7 @@ class Email(Field):
         else:
             raise EmailInvalidFormatError('Invalid email format')
 
+
 class Address(Field):
 
     pass
@@ -257,5 +259,19 @@ class Note:
         self.title = title
 
 
+class AbsUserInterface(ABC):
+
+    @abstractmethod
+    def __call__(self, output):
+        pass
+
+
+class ConsoleUserInterface(AbsUserInterface):
+
+    def __call__(self, output):
+        print(Fore.YELLOW + output + Style.RESET_ALL)
+
+
+console = ConsoleUserInterface()
 address_book = AddressBook()
 note_book = Notes()
