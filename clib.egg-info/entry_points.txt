@@ -1,0 +1,3 @@
+[console_scripts]
+clib = clib.main:main
+
